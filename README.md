@@ -1,4 +1,4 @@
-# from-sources-nuxt
+# from-sources-web
 
 > Nuxt.js project
 
