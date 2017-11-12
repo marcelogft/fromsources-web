@@ -22,6 +22,9 @@ module.exports = {
   css: [
     '~/assets/style/app.styl'
   ],
+  router: {
+    base: '/fromsources-web/'
+  },
   /*
   ** Build configuration
   */
