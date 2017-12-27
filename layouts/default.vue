@@ -2,7 +2,7 @@
   <v-app dark>
     <v-navigation-drawer 
       persistent
-      :mini-variant="miniVariant"
+      :mini-variant="!miniVariant"
       :clipped="clipped"
       v-model="drawer"
       app
@@ -89,7 +89,7 @@
         drawer: true,
         fixed: false,
         items: [
-          { icon: 'apps', title: 'Welcome', to: '/' },
+          { icon: 'home', title: 'Welcome', to: '/' },
           { icon: 'info', title: 'About', to: '/about' }
         ],
         miniVariant: false,

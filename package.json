@@ -2,19 +2,21 @@
   "name": "from-sources-web",
   "version": "1.0.0",
   "description": "From sources Nuxt.js project",
-  "author": "MOCR",
+  "author": "Marcelo Colomer",
   "private": true,
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "lint": "eslint --ext --fix .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint",
     "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "dependencies": {
     "nuxt": "^1.0.0-rc11",
+    "vue": "^2.4.3",
+    "vue-template-compiler": "^2.0.0",
     "vuetify": "^0.16.9"
   },
   "devDependencies": {
