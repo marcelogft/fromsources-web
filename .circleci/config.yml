@@ -7,7 +7,14 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: node:8.0
+      - image: node:9.4
+
+    steps:
+      - run:
+          name: "Checking Versions"
+          command: |
+            node --version
+            npm --version
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
