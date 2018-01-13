@@ -27,15 +27,11 @@
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>FromSources</v-toolbar-title>
     </v-toolbar>
-    <v-content>
-      <v-container fluid fill-height>
-        <v-layout justify-center align-center>
-            <nuxt />
-        </v-layout>
-      </v-container>
+    <v-content> 
+      <nuxt /> 
     </v-content>
     <v-footer app fixed>
-      <span>Fromsources &copy; 2017</span>
+      <span>Fromsources &copy; 2018</span>
     </v-footer>
   </v-app>
 </template>
@@ -46,7 +42,8 @@
       drawer: null,
       items: [
         { icon: 'home', title: 'Home', to: '/' },
-        { icon: 'info', title: 'About', to: '/about' }
+        { icon: 'build', title: 'Tools', to: '/tools' },
+        { icon: 'info_outline', title: 'About', to: '/about' }
       ]
     }),
     props: {

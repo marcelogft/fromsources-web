@@ -11,15 +11,18 @@ module.exports = {
       { hid: 'description', name: 'description', content: 'Fromsources Nuxt.js project' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' } 
+      //  { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' }  
     ]
   },
   /*
   ** Customize the progress bar color
   */
-  loading: { color: '#8cb5f2' },
+  loading: { color: '#fff' },
   plugins: ['~/plugins/vuetify.js'],
+  modules: [
+    '@nuxtjs/font-awesome'
+  ],
   css: [
     '~/assets/style/app.styl'
   ],

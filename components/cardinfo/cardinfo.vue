@@ -1,6 +1,6 @@
 <template>
-  <v-card color="blue-grey lighten-1 darken-2" class="text-xs-left white--text" >
-    <v-container fluid grid-list-lg >
+  <v-card color="blue-grey lighten-1 darken-2" class="text-xs-left white--text" ripple hover nuxt :to="link">
+    <v-container fluid grid-list-lg>
         <v-layout row>
             <v-flex xs7>
               <div>
@@ -27,6 +27,12 @@ export default {
       name: String,
       desc: String,
       icon: String
+    },
+    name: String
+  },
+  data () {
+    return {
+      link: 'framework?' + this.name
     }
   }
 }

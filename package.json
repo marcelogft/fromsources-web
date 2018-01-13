@@ -14,7 +14,10 @@
     "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "dependencies": {
+    "@nuxtjs/font-awesome": "^1.0.3",
+    "material-design-icons": "^3.0.1",
     "nuxt": "^1.0.0-rc11",
+    "typeface-roboto": "0.0.45",
     "vue": "^2.5.13",
     "vue-template-compiler": "^2.5.13",
     "vuetify": "^0.17.6"
