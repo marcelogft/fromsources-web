@@ -4,7 +4,10 @@
 #
 version: 2
 jobs:
-  build:
+  build: 
+    branches:
+      ignore:
+        - gh-pages
     docker:
       # specify the version you desire here
       - image: node:9.4
