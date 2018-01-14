@@ -45,4 +45,4 @@ jobs:
 
       - deploy:
           name: Deploy
-          command: ./deploy-gh.sh
+          command: bash ./deploy-gh.sh
