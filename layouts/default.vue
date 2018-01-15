@@ -28,7 +28,16 @@
       <v-toolbar-title>FromSources</v-toolbar-title>
     </v-toolbar>
     <v-content> 
-      <nuxt /> 
+       <v-container fluid grid-list-md>
+    <v-layout row wrap>
+      <v-flex xs10>
+      <nuxt />  
+      </v-flex>
+        <v-flex xs2>
+       <a class="twitter-timeline" data-theme="dark" href="https://twitter.com/mcolomer?ref_src=twsrc%5Etfw">Timeline</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </v-flex>
+    </v-layout>
+       </v-container>
     </v-content>
     <v-footer app fixed>
       <span>Fromsources &copy; 2018</span>
@@ -37,19 +46,19 @@
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      drawer: null,
-      items: [
-        { icon: 'home', title: 'Home', to: '/' },
-        { icon: 'build', title: 'Tools', to: '/tools' },
-        { icon: 'info_outline', title: 'About', to: '/about' }
-      ]
-    }),
-    props: {
-      source: String
-    }
+export default {
+  data: () => ({
+    drawer: null,
+    items: [
+      { icon: 'home', title: 'Home', to: '/' },
+      { icon: 'build', title: 'Tools', to: '/tools' },
+      { icon: 'info_outline', title: 'About', to: '/about' }
+    ]
+  }),
+  props: {
+    source: String
   }
+}
 </script>
 
  

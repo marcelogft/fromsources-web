@@ -1,5 +1,4 @@
-<template> 
-   
+<template>  
     <section>
       <v-parallax src="images/codecode.jpg" height="600" style="width: 100%;">
       <v-layout column align-center justify-center>
@@ -7,8 +6,7 @@
         <h4 class="white--text">{ "coding": true }</h4>
       </v-layout>
     </v-parallax>
-    </section>     
- 
+    </section>   
 </template> 
 <style>
 .parallax__image-container {
