@@ -1,5 +1,6 @@
 module.exports = {
     title: 'From Sources',
+    base: '/fromsources-web/',
     description: "Welcome to the From Sources blog",
     head: [
         ['link', { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' }],
@@ -10,6 +11,6 @@ module.exports = {
             { text: 'Home', link: '/' },
             { text: 'Blog', link: '/blog/' },
             { text: 'About', link: '/about/' }
-        ] 
+        ]
     }
-} 
+}
