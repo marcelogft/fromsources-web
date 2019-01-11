@@ -1,9 +1,7 @@
 <template>
   <div class="page">
     <slot name="top"/>
-    
     <Content :custom="false"/>
-
     <div class="page-edit">
       <div
         class="edit-link"
@@ -55,21 +53,66 @@
           →
         </span>
       </p>
+
     </div>
-
-    
-
+    <section>
+        <v-layout
+          column
+          wrap
+          class="my-5"
+          align-center
+        >
+          <v-flex xs12 sm4 class="my-3">
+            <div class="text-xs-center">
+               <Social v-if="title" :url="url"
+                 :title="title"
+                 :description="description"
+                 :quote="quote"
+                 :hashtags="hashtags"/>
+            </div>
+          </v-flex>
+        </v-layout>
+    </section>
     <slot name="bottom"/>
+
   </div>
 </template>
 
 <script>
 import { resolvePage, normalize, outboundRE, endingSlashRE } from './util'
+import Social from '../components/Social'
 
 export default {
   props: ['sidebarItems'],
-
+  components: {
+    Social
+  },
   computed: {
+    url() {
+     if (this.$page.path) {
+      return `https://marcelogft.github.io/fromsources-web/${this.$page.path}`
+     }
+    },
+    title() {
+     if (this.$page.frontmatter.title) {
+      return this.$page.frontmatter.title
+     }
+    },
+    description() {
+     if (this.$page.frontmatter.description) {
+        return this.$page.frontmatter.description
+       }
+     },
+    quote() {
+      if (this.$page.frontmatter.quote) {
+        return this.$page.frontmatter.quote
+      }
+    },
+    hashtags() {
+      if (this.$page.frontmatter.hashtags) {
+        return this.$page.frontmatter.hashtags
+      }
+    },
     lastUpdated () {
       if (this.$page.lastUpdated) {
         return new Date(this.$page.lastUpdated).toLocaleString(this.$lang)

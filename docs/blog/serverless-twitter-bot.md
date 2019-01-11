@@ -1,10 +1,13 @@
 ---
 title: Serverless Twitter Bot 
 image: https://www.iab.com/wp-content/uploads/2014/09/iababc-international-spiders-and-bots-list.jpg
-date: 10-11-2018
+date: 2018-11-10
 description:
    Build a Serverless Twitter Bot with AWS Lambda and the Serverless framework.
+quote: FromSources Blog 
+hashtags: serverless, twitter, bot, lambda, aws
 ---
+
 
 ![An image](https://www.iab.com/wp-content/uploads/2014/09/iababc-international-spiders-and-bots-list.jpg)
 
@@ -148,3 +151,7 @@ If everything was fine with the AWS deployment, we'll have our Lambda function t
 ## Sources 
 <v-icon>fab fa-github </v-icon>
 [GitHub](https://github.com/marcelogft/serverless-twitter-bot)  
+
+
+
+

@@ -1,8 +1,8 @@
 ---
 home: true
-heroImage: /pattern.png
+heroImage: /pattern.jpg
 actionText: Blog →
 actionLink: /blog/
  
-footer: MIT Licensed | Copyright © 2018
+footer: MIT Licensed | Copyright © 2019
 ---

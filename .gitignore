@@ -1,11 +1,13 @@
 # dependencies
 node_modules
 
+dist
+
 # logs
 npm-debug.log
 
 # Nuxt build
 .nuxt
 
-# Nuxt generate
-distdocs/.vuepress/dist/
+# generate
+docs/.vuepress/dist/

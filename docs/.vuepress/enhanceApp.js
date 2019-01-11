@@ -1,6 +1,8 @@
 import Vuetify from 'vuetify'
 // index.js or main.js
-//import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
+
+import SocialSharing from 'vue-social-sharing'
+
 
 export default ({
   Vue, // the version of Vue being used in the VuePress app
@@ -11,5 +13,5 @@ export default ({
     Vue.use(Vuetify, {
       iconfont: 'fa'
      })
-    console.log ("Loaded")
+     Vue.use(SocialSharing)
 }
