@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vuepress dev docs",
     "build": "vuepress build docs",
-    "deploy": "gh-pages --dist docs/.vuepress/dist"
+    "deploy": "./node_modules/.bin/gh-pages --dist docs/.vuepress/dist"
   },
   "author": "Marcelo Colomer",
   "license": "ISC",
