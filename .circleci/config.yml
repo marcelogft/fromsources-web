@@ -29,26 +29,23 @@ jobs:
           paths: '*'
   deploy:
     docker:
-      - image: circleci/node:10.15.0-browsers-legacy
+      - image: circleci/node:10
     steps:
       - checkout
       - attach_workspace:
           at: docs/.vuepress/dist
       - add_ssh_keys:
           fingerprints:
-            - "66:1c:2d:df:68:b3:d2:ac:14:f6:64:a7:c3:8d:fd:0a"
-      - run:
-          name: Install and configure dependencies
-          command: npm install -g --silent gh-pages@2.0.1 
+            - "66:1c:2d:df:68:b3:d2:ac:14:f6:64:a7:c3:8d:fd:0a" 
       - run:
           name: git_user
           command: git config user.name "marcelogft"
       - run:
           name: git_user_email
-          command: ggit config user.email "marcelo.colomer@gft.com"
+          command: git config user.email "marcelo.colomer@gft.com"
       - run:
           name: Deploy docs to gh-pages branch
-          command: gh-pages --dist docs/.vuepress/dist
+          command: npm run deploy
 
 workflows:
   version: 2
