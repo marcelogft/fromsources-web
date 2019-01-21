@@ -35,6 +35,10 @@ jobs:
         
       # build!
       - run: npm run build 
+  deploy:
+    machine:
+      enabled: true
+    steps:
       - run:
           name: Install and configure dependencies
           command: |
