@@ -25,8 +25,8 @@ jobs:
       # build!
       - run: npm run build
       - persist_to_workspace:
-          root: docs/.vuepress/dist
-          paths: '*'
+          root: .
+          paths: .
   deploy:
     docker:
       - image: circleci/node:10
