@@ -29,7 +29,7 @@ jobs:
           paths: '*'
   deploy:
     docker:
-      - image: mcolomer/node10-circleci
+      - image: circleci/node:10
     steps:
       - checkout
       - attach_workspace:
@@ -45,7 +45,7 @@ jobs:
           command: git config user.email "marcelo.colomer@gft.com"
       - run:
           name: Deploy docs to gh-pages branch
-          command: gh-pages --dist docs/.vuepress/dist
+          command: npm run deploy
 
 workflows:
   version: 2
