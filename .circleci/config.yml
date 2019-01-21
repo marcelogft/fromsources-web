@@ -37,6 +37,7 @@ jobs:
       - run: npm run build
       - persist_to_workspace:
           root: docs/.vuepress/dist
+          paths: *
   deploy:
     docker:
       - image: circleci/node:10.15.0-browsers-legacy
@@ -50,6 +51,11 @@ jobs:
       - run:
           name: dir
           command: cd docs/.vuepress/dist
+      - run:
+          name: user
+          command: |
+             git config --global user.email "marcelo.colomer@gft.com"
+             git config --global user.name "marcelogft"
       - run:
           name: init
           command: git init
