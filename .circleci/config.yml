@@ -8,7 +8,7 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:10.15.0-browsers-legacy
-      
+
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
@@ -32,24 +32,37 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-        
+
       # build!
-      - run: npm run build 
+      - run: npm run build
+      - persist_to_workspace:
+          root: docs/.vuepress/dist
   deploy:
-    machine:
-      enabled: true
+    docker:
+      - image: circleci/node:10.15.0-browsers-legacy
     steps:
-      - run:
-          name: Install and configure dependencies
-          command: |
-            npm install -g --silent gh-pages@2.0.1
-            git config user.email "marcelo.colomer@gft.com"
-            git config user.name "marcelogft"
-     
+      - checkout
+      - attach_workspace:
+          at: docs/.vuepress/dist
       - add_ssh_keys:
           fingerprints:
-            - "66:1c:2d:df:68:b3:d2:ac:14:f6:64:a7:c3:8d:fd:0a"      
+            - "66:1c:2d:df:68:b3:d2:ac:14:f6:64:a7:c3:8d:fd:0a"
       - run:
-          name: Deploy docs to gh-pages branch
-          command: gh-pages --dist docs/.vuepress/dist
+          name: dir
+          command: cd docs/.vuepress/dist
+      - run:
+          name: init
+          command: git init
+      - run:
+          name: add
+          command: git add -A
+      - run:
+          name: commit
+          command: git commit -m 'deploy'
+      - run:
+          name: push
+          command: git push -f  https://github.com/marcelogft/fromsources-web master:gh-pages
+
+
+
 
