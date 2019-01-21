@@ -29,20 +29,14 @@ jobs:
           paths: '*'
   deploy:
     docker:
-      - image: circleci/node:10
+      - image: mcolomer/node10-circleci
     steps:
       - checkout
       - attach_workspace:
           at: docs/.vuepress/dist
       - add_ssh_keys:
           fingerprints:
-            - "66:1c:2d:df:68:b3:d2:ac:14:f6:64:a7:c3:8d:fd:0a"
-      - run:
-          name: global
-          command: npm set prefix=/home/circleci/npm && echo 'export PATH=$HOME/circleci/npm/bin:$PATH' >> /home/circleci/.bashrc"
-      - run:
-          name: Install and configure dependencies
-          command: npm install -g --silent gh-pages@2.0.1 
+            - "66:1c:2d:df:68:b3:d2:ac:14:f6:64:a7:c3:8d:fd:0a" 
       - run:
           name: git_user
           command: git config user.name "marcelogft"
