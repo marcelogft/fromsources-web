@@ -1,6 +1,6 @@
 ---
 home: true
-heroImage: /pattern.jpg
+heroImage: /background.jpg
 actionText: Blog →
 actionLink: /blog/
  
