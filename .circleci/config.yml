@@ -39,10 +39,13 @@ jobs:
             - "66:1c:2d:df:68:b3:d2:ac:14:f6:64:a7:c3:8d:fd:0a"
       - run:
           name: Install and configure dependencies
-          command: |
-            npm install -g --silent gh-pages@2.0.1
-            git config user.email "marcelo.colomer@gft.com"
-            git config user.name "marcelogft"
+          command: npm install -g --silent gh-pages@2.0.1 
+      - run:
+          name: git_user
+          command: git config user.name "marcelogft"
+      - run:
+          name: git_user_email
+          command: ggit config user.email "marcelo.colomer@gft.com"
       - run:
           name: Deploy docs to gh-pages branch
           command: gh-pages --dist docs/.vuepress/dist
