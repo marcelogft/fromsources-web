@@ -37,7 +37,7 @@ jobs:
       - run: npm run build
       - persist_to_workspace:
           root: docs/.vuepress/dist
-          paths: *
+          paths: '*'
   deploy:
     docker:
       - image: circleci/node:10.15.0-browsers-legacy
