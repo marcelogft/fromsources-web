@@ -24,16 +24,6 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       # build!
       - run: npm run build
-      - persist_to_workspace:
-          root: .
-          paths: .
-  deploy:
-    docker:
-      - image: circleci/node:10
-    steps:
-      - checkout
-      - attach_workspace:
-          at: docs/.vuepress/dist
       - add_ssh_keys:
           fingerprints:
             - "66:1c:2d:df:68:b3:d2:ac:14:f6:64:a7:c3:8d:fd:0a" 
@@ -46,15 +36,4 @@ jobs:
       - run:
           name: Deploy docs to gh-pages branch
           command: npm run deploy
-
-workflows:
-  version: 2
-  build:
-    jobs:
-      - build
-      - deploy:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+ 
