@@ -16,16 +16,11 @@
       </section>
 
       <section>
-        <v-container grid-list-md>
-        <v-layout
-          row
-          wrap
-          class="my-5"
-          align-center
-        >
-        <v-flex xs3 :key="post.key" v-for="post in posts">
-         <v-card>
-           <v-img :src="post.frontmatter.image" aspect-ratio="3.75"></v-img>
+        <v-container fluid fill-height  grid-list-lg>
+        <v-layout align-center justify-space-around fill-height row wrap>
+        <v-flex :key="post.key" v-for="post in posts" xs12 sm6 md4>
+         <v-card height="100%">
+           <v-img :src="post.frontmatter.image" height="200px"></v-img>
            <v-card-title primary-title>
            <div>
              <h3 class="title">{{ post.frontmatter.title }}</h3>
