@@ -49,7 +49,7 @@
               dark
               large
               round
-              href="/blog"
+              :href="$withBase(data.actionLink)"
             >
               Blog
             </v-btn>
