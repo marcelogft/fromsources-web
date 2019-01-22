@@ -9,7 +9,7 @@
           >
             <img src="logo.png" alt="FromSources" height="200">
             <h1 class="font-weight-bold mb-2 display-3 text-xs-center" style="text-shadow: 2px 2px 4px #000000;">From Sources Blog</h1>
-            <div class="subheading mb-3 text-xs-center" style="text-shadow: 2px 2px 4px #000000;">Code, code, code</div>
+            <div class="subheading mb-3 text-xs-center" style="text-shadow: 2px 2px 4px #000000;">Yet Another Coding Blog</div>
 
           </v-layout>
         </v-parallax>
