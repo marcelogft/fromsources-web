@@ -1,7 +1,9 @@
 <template>
   <div class="page">
     <slot name="top"/>
+     <transition name="fade" mode="out-in">
     <Content :custom="false"/>
+    </transition>
     <div class="page-edit">
       <div
         class="edit-link"

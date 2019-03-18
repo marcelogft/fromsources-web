@@ -1,7 +1,10 @@
 <template>
   <header class="navbar">
     <SidebarButton @toggle-sidebar="$emit('toggle-sidebar')"/>
-
+    <transition
+      name="fade"
+      mode="out-in"
+    >
     <router-link
       :to="$localePath"
       class="home-link"
@@ -19,7 +22,7 @@
         :class="{ 'can-hide': $site.themeConfig.logo }"
       >{{ $siteTitle }}</span>
     </router-link>
-
+     </transition>
     <div
       class="links"
       :style="{
