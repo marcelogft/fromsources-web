@@ -38,21 +38,44 @@ The unit of data within Kafka is called a **message** => array of bytes
  * Broker serve consumers => respond to fetch requests for partitions and responding with the messages.
 
 ## Configuration 
-* At the broker level, you control the **default.replication.factor** for automatically created topics.
+
+* **broker.id** - Every Kafka broker must have an integer identifier - unique within a single Kafka cluster
+
+* **port** - a listener on TCP - DEFAULT port 9092 
+
+* **zookeeper.connect** - The location of the Zookeeper used for storing the broker metadata - a semicolon-separated list of **hostname:port/path** strings:
+  * *hostname*, the hostname or IP address of the Zookeeper server.
+  * *port*, the client port number for the server.
+  * */path*, an optional Zookeeper path to use as a chroot environment for the Kafka cluster. If it is omitted, the root path is used.
+
+* **log.dirs** log segments are stored in the directories specified in the log.dirs configuration. - comma-separated list of paths. If more than one path is specified, the broker will store partitions on them in a “least-used” fashion with one partition’s log segments stored within the same path. Note that the broker will place a new partition in the path that has the
+least number of partitions currently stored in it, not the least amount of disk space used in the following situations.
+
+* **num.recovery.threads.per.data.dir** - number configured is per log directory specified with log.dirs. pool of threads for handling log segments. By default, only one thread per log directory is used 
+  * When starting normally, to open each partition’s log segments
+  * When starting after a failure, to check and truncate each partition’s log segments
+  * When shutting down, to cleanly close log segments
+ 
+* **auto.create.topics.enable** - DEFAULT true 
+  * When a producer starts writing messages to the topic
+  * When a consumer starts reading messages from the topic
+  * When any client requests metadata for the topic
+ 
+*  **default.replication.factor** for automatically created topics.
 A replication factor of N allows you to lose N-1 brokers while still being able to read and write data to the topic reliably. Higher replication factor leads to higher availability, higher reliability, and fewer disasters
 
 * **unclean.leader.election.enable** -- default true. If we allow out-of-sync replicas to become leaders, we risk data loss and data inconsistencies. If we set it to false, we choose to wait for the original leader to come back online, resulting in lower availability
 
-* **min.insync.replicas** to 2, then you can only write to a partition in the topic if at least two out of the three replicas are in-sync -- Read-only mode.
-  **min.insync.replicas** only matters if **acks=all**
+* **min.insync.replicas** topic and the broker-level configuration are called min.insync.replicas. To 2, then you can only write to a partition in the topic if at least two out of the three replicas are in-sync -- Read-only mode.   **min.insync.replicas** only matters if **acks=all**
 
 ## Controller
 The controller is one of the Kafka brokers that, in addition to the usual broker functionality, is responsible for electing partition leaders. The first broker that starts in the cluster
 becomes the controller by creating an ephemeral node in ZooKeeper called **/controller**.
-Kafka uses Zookeeper’s ephemeral node feature to elect a controller and to notify the controller when nodes join and leave the cluster. The controller is responsible for electing leaders among the partitions and replicas whenever it notices nodes join and leave the cluster. The controller uses the epoch number to prevent a “split brain” scenario where two nodes believe each is the current controller.
+
+Kafka uses **Zookeeper’s ephemeral** node feature to elect a controller and to notify the controller when nodes join and leave the cluster. The controller is responsible for electing leaders among the partitions and replicas whenever it notices nodes join and leave the cluster. The controller uses the epoch number to prevent a “split brain” scenario where two nodes believe each is the current controller.
 
  Controller => one broker will also function as the cluster *controller* - There is only one controller in a cluster at all times.
-   Admin operaitons:
+   Admin operations:
    * Assigning partitions to brokers 
    * Monitoring for broker failures
 
@@ -67,6 +90,26 @@ Replicas are spread across available brokers, and each replica = one broker. RF 
 Dynamic topic configurations are maintained in Zookeeper.
 
 **Partitions** are also the way that Kafka provides redundancy and scalability. Each partition can be hosted on a different server, which means that a single topic can be scaled horizontally across multiple servers to provide performance far beyond the ability of a single server.
+
+* **num.partitions** how many partitions a new topic is created with, primarily when automatic topic creation is enabled - DEFAULT 1 - 
+**The number of partitions for a topic can only be increased, never decreased**
+
+log-retention settings operate on log segments
+
+* **log.retention.ms** The most common configuration for how long Kafka will retain messages is by time.
+   log.retention.hours parameter, DEFAULT - 168 hours, or one week. 
+   log.retention.minutes 
+   log.retention.ms
+  the smaller unit size will take precedence if more than one is specified.
+
+* **log.retention.bytes** - applied per-partition - log.retention.bytes & log.retention.ms messages may be removed when either criteria is met
+
+* **log.segment.bytes** - DEFAULT 1 GB
+
+* **log.segment.ms** - The amount of time after which a log segment should be closed. --- NOT DEFAULT ---
+
+* **message.max.bytes** - DEFAULT 1MB - (or 1000000) - impact I/O throughput
+Coordinated with the consumer configuration **fetch.message.max.bytes** configuration on consumer amd the **replica.fetch.max.bytes**  
 
 # Producers
 
@@ -83,6 +126,8 @@ Optionally, we can also specify a *key* and/or a *partition*. Once we send the *
 When the broker receives the messages, it sends back a response. If the messages were successfully written to Kafka, it will return a **RecordMetadata** object with the topic, partition, and the offset of the record within the partition. If the broker failed to write the messages, it will return an error. When the producer receives an error, it
 may retry sending the message a few more times before giving up and returning an error.
 
+A producer object can be used by **multiple threads** to send messages
+
 **Mandatory properties**
 
 * **bootstrap.servers**: List of host:port pairs of brokers. 
@@ -92,7 +137,8 @@ may retry sending the message a few more times before giving up and returning an
 **Methods**
 * **Fire-and-forget**: We send a message to the server and don’t really care if it arrives succesfully or not. Most of the time, it will arrive successfully, since Kafka is highly available and the producer will retry sending messages automatically. However, some messages will get lost using this method.
 * **Synchronous** send. We send a message, the send() method returns a Future object, and we use get() to wait on the future and see if the send() was successful or not.
-* **Asynchronous** send: We call the send() method with a callback function, which gets triggered when it receives a response from the Kafka broker.
+* **Asynchronous** send: We call the send() method with a callback function, which gets triggered when it receives a response from the Kafka broker. *org.apache.kafka.
+clients.producer.Callback* interface, which has a single function— *onCompletion()*.
 
 Errors before sending the message to Kafka:  
   * **SerializationException** when it fails to serialize the message. 
@@ -123,7 +169,7 @@ KafkaProducer type of errors.
 
 * **client.id** This can be any string, and will be used by the brokers to identify messages sent from the client.  
 
-* **max.in.flight.requests.per.connection** how many messages the producer will send to the server without receiving responses. Setting this to 1 will guarantee that messages will be written to the broker in the order in which they were sent.
+* **max.in.flight.requests.per.connection** how many messages the producer will send to the server without receiving responses. Setting this to **1** will guarantee that messages will be written to the broker in the order in which they were sent.
  
 * **request.timeout.ms**: how long the producer will wait for a reply from the server when sending data
 
@@ -152,6 +198,8 @@ be sent.This will severely limit the throughput of the producer, so only use thi
 Kafka does not track acknowledgments from consumers the way many JMS queues do. Instead, it allows consumers to use Kafka to track their position (offset) in each partition.
 
 **commit**: Action of updating the current position in the partition. Consumer produces a message to Kafka, to a special **__consumer_offsets** topic, with the committed offset for each partition.
+
+Consumers do not directly write to the __consumer_offsets topic, they instead interact with a broker that has been elected to manage that topic, which is the **Group Coordinator** broker
 
  **offset**: integer  -- Each message in a given partition has a unique offset.
 
@@ -225,6 +273,7 @@ One consumer per thread is the rule.
    **heatbeat.interval.ms** must be lower than session.timeout.ms
 
 * **auto.offset.reset** Default is **latest**. **earliest** to start consuming from beginning. For KSQL, SET 'auto.offset.reset'='earliest';
+  **auto.offset.reset=none** means that the consumer will crash if the offsets it's recovering from have been deleted from Kafka
 
 * **enable.auto.commit** Default is true
   **auto.commit.interval.ms** how frequently offsets will be committed. Default 5seg.
@@ -235,6 +284,9 @@ One consumer per thread is the rule.
   Throughput can be improved by committing less frequently, but then we are increasing the number of potential duplicates that a rebalance will create.
   The drawback is that while commitSync() will retry the commit until it either succeeds or encounters a nonretriable failure, **commitAsync() will not retry**.
 
+  * If the committed offset is smaller than the offset of the last message the client processed, the messages between the last processed offset and the committed offset will be processed twice
+  * If the committed offset is larger than the offset of the last message the client actually processed, all messages between the last processed offset and the committed offset will be missed   by the consumer group
+  
 * **partition.assignment.strategy**
   **Range**: Assigns to each consumer a consecutive subset of partitions from each topic it subscribes to.
   **RoundRobin**: Takes all the partitions from all subscribed topics and assigns them to consumers sequentially, one by one.
@@ -245,6 +297,8 @@ One consumer per thread is the rule.
 
 * **receive.buffer.bytes**: size of the TCP buffer
 * **send.buffer.bytes**: sizes of the TCP buffer
+
+Producer idempotence helps prevent the network introduced duplicates - **enable.idempotence=true**
 
 # Retention 
 The durable storage of messages for some period of time. Kafka brokers are configured with a default retention setting for topics, either retaining messages for some period of time or until the topic reaches a certain size in bytes. Once these limits are reached, messages are expired and deleted so that the retention configuration is a minimum amount of data available at any time. 
@@ -283,6 +337,8 @@ Apache Kafka carries messages between the various members of the infrastructure,
 * Stream processing 
 
 # Zookeeper
+
+An ensemble is a set of *2n + 1* ZooKeeper servers where n is any number greater than 0. The odd number of servers allows ZooKeeper to perform majority elections for leadership. 
 
 Different Kafka components subscribe to the **/brokers/ids** path in Zookeeper where brokers are registered so they get notified when brokers are added or removed.
 
