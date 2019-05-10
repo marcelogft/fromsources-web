@@ -3,7 +3,7 @@ title: Kafka Streams
 image: https://mapr.com/blog/apache-kafka-and-mapr-streams-terms-techniques-and-new-designs/assets/streaming-post1.jpg
 date: 2019-04-25
 description:
-   Some Apache Kafka Connect notes. 
+   Some Apache Kafka Streams notes. 
 quote: FromSources Blog 
 hashtags: kafka, streams, confluent, apache, streaming
 ---
